@@ -3,16 +3,30 @@
 DSH Desktop / DSH Web 的开机动画：**8 秒浅色序列 + 开机音**。以 Cordis 客户端插件形式
 装入 `desktop` profile，不改 DSH 源码，不替换任何可执行文件。
 
+![预览](assets/preview.png)
+
 ## 安装
 
+两种方式安装的是同一份插件，`client/client.js` 已含内嵌音频，均无构建步骤。
+
+### 方式一：Release 压缩包
+
+从 [Releases](https://github.com/TapKeen/DSH-desktop-boot-animation/releases/latest) 下载
+`dsh-startup-animation-1.2.0.tgz`：
+
 ```powershell
-dsh plugin add "<仓库目录的绝对路径>"
+dsh plugin add "$HOME\Downloads\dsh-startup-animation-1.2.0.tgz"
+```
+
+### 方式二：克隆仓库
+
+```powershell
+git clone https://github.com/TapKeen/DSH-desktop-boot-animation.git "$HOME\DSH-desktop-boot-animation"
+dsh plugin add "$HOME\DSH-desktop-boot-animation"
 ```
 
 装完**完整退出并重启 DSH Desktop**。profile 组合每个 Host generation 只计算一次，
 运行中的实例看不到新插件。
-
-仓库内的 `client/client.js` 已包含内嵌音频，克隆后可直接安装。
 
 ## 使用
 
