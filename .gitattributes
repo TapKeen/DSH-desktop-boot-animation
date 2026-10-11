@@ -1,0 +1,9 @@
+# Normalise line endings in the repository; check out native on each platform.
+* text=auto eol=lf
+
+# Media is opaque; never transform it.
+*.mp3 binary
+*.wav binary
+*.woff2 binary
+*.png binary
+*.ico binary

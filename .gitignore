@@ -1,0 +1,12 @@
+# Installed plugin trees, never committed.
+node_modules/
+
+# Build artefact left by scripts/embed-audio.mjs.
+*.pre-embed
+
+# Electron writes crashpad noise here when it runs with cwd set to this tree.
+debug.log
+
+# OS noise.
+.DS_Store
+Thumbs.db

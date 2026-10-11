@@ -1,0 +1,30 @@
+{
+  "name": "dsh-startup-animation",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Decorative full-screen startup sequence with an embedded boot chime, for the DSH Desktop / Web shell.",
+  "type": "module",
+  "main": "lib/index.js",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": []
+    }
+  },
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "client/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "preview.html"
+  ]
+}

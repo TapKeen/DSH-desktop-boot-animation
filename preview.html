@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>DSH 开机动画 · 预览</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: #05070c;
+    color: #93a8c4;
+    font-family: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace;
+  }
+  #note {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    line-height: 1.9;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+  #note b { color: #cfe2ff; font-weight: 600; }
+  #note kbd {
+    background: #16202f; border: 1px solid #2a3a52;
+    border-radius: 4px; padding: 1px 6px; color: #dce8fb;
+  }
+</style>
+</head>
+<body>
+
+<div id="note">
+  <b>DSH 开机动画 · 独立预览</b><br>
+  这就是将要安装的 <code>client/client.js</code> 本体<br>
+  按 <kbd>R</kbd> 重放 &nbsp;·&nbsp; 按 <kbd>Esc</kbd> / 点击 跳过 &nbsp;·&nbsp; 按 <kbd>M</kbd> 静音<br>
+  <small>浏览器禁止无交互播放音频，所以要先点一下页面才会响；<br>
+  DSH Desktop 是 Electron，默认允许直接播放。</small>
+</div>
+
+<script>
+  /* Minimal stand-in for the DSH module loader so the real bundle runs unchanged. */
+  window.__ModuleLoader__ = {
+    load(registration) { window.__dsaRegistration = registration; }
+  };
+</script>
+
+<!-- The actual, unmodified bundle that will be installed into the profile. -->
+<script src="./client/client.js"></script>
+
+<script>
+  (function () {
+    var reg = window.__dsaRegistration;
+    if (!reg) { document.getElementById('note').textContent = '预览失败：bundle 未注册 factory'; return; }
+
+    /* The bundle depends on no platform module, so a throwing require is correct. */
+    function req(spec) { throw new Error('preview harness: unexpected require("' + spec + '")'); }
+
+    var mod;
+    try {
+      mod = reg.factory(req);
+    } catch (e) {
+      document.getElementById('note').textContent = '预览失败：' + e.message;
+      return;
+    }
+
+    document.getElementById('note').style.display = 'none';
+
+    /* apply() is what the client loader calls on boot. */
+    try { mod.apply(); } catch (e) { console.error(e); }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        if (window.__dshStartupAnimation) window.__dshStartupAnimation.play();
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
